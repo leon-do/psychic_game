@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<h1> The Psychotic Game </h1>
+	<div> Type to guess the word: </div>
+	<br>
+	<div id="txt"> </div>
+
+
+	<script>
+		var randomLetter;
+		var wins = 0;
+		var loss = 0;
+		var guess = 10; //user gets 10 guesses guess--
+		var guessArray = []; //blank array to store guesses
+
+
+
+
+		generateRandomLetter();
+		function generateRandomLetter(){
+			var randomNum = Math.floor(Math.random()*26) //random # from 0 - 26
+			var letter = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+			randomLetter = letter[randomNum]; //random letter from a - z
+
+			console.log(randomLetter);
+		}
+
+
+
+
+
+		document.addEventListener("keyup", myLetter) //do this function when user presses key
+	    function myLetter(dude){
+	    	// get keypress #
+	    	var keyCode = dude.keyCode;
+
+	        //convert # to LETTER
+	        var capsLetter = String.fromCharCode(keyCode);
+
+	        // convert to lowercase
+	        var myLetter = capsLetter.toLowerCase();
+			
+			// go to check function
+			checkIT(myLetter);
+		};
+
+
+
+
+
+
+
+		function checkIT(myLetter){
+			if (guessArray.indexOf(myLetter) >= 0){
+
+				//if user repeats letter, do nothing
+
+			} else if (myLetter === randomLetter){ //player wins
+				wins = wins + 1;
+				guess = 10;
+				guessArray = []; //resets guesses
+				generateRandomLetter();
+
+			} else if (guess === 0){ //player loses
+				loss = loss + 1;
+				guess = 10;
+				guessArray = [];
+				generateRandomLetter();
+
+			} else{
+				guess = guess - 1; //subtract guesses
+				guessArray.push(myLetter);
+			}
+
+
+			// display on screen
+			document.getElementById("txt").innerHTML = " " +
+			"Wins: " + wins + "<br>" +
+			"Losses: " + loss + "<br>" +
+			"Guesses left: " + guess + "<br>" +
+			"Your guesses so far: " + guessArray;
+		}
+
+
+
+	</script>
+</body>
+</html>
